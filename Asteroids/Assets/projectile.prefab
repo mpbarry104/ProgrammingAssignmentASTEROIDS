@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1607814656235425056}
   - component: {fileID: 4591121222453461571}
   - component: {fileID: 5118725647402792279}
+  - component: {fileID: 1168561625363096152}
   m_Layer: 0
   m_Name: projectile
   m_TagString: Untagged
@@ -128,7 +129,7 @@ CapsuleCollider2D:
   m_Direction: 0
 --- !u!50 &5118725647402792279
 Rigidbody2D:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -139,8 +140,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -153,3 +154,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1168561625363096152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5619775578781361869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ecb38c59d5d834797e30607c07c1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
