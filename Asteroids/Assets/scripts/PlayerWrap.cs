@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Clampedcam : MonoBehaviour
+public class PlayerWrap : MonoBehaviour
 {
     private Camera mainCamera;
     private Vector2 screenBounds;
