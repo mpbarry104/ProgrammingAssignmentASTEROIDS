@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour
             if (asteroid != null)
             {
                 asteroid.Split();
-                asteroid.Split();
             }
         }
     }

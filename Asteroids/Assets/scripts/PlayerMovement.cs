@@ -7,11 +7,24 @@ public class PlayerMovement : MonoBehaviour
     public float MS = 10f; //max speed
 
     private Rigidbody2D rb;
+    public AudioClip thrustSound; // Assign your thrust sound clip here
+    private AudioSource audioSource;
 
     void Start()
     {
         // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
+
+        // Get the AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("No AudioSource component found on this GameObject.");
+        }
+        else
+        {
+            audioSource.loop = true; // Make the sound loop
+        }
     }
 
     [System.Obsolete]
@@ -26,6 +39,21 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 thrust = transform.up * TP;
             rb.AddForce(thrust);
+
+            // Play thrust sound if not already playing
+            if (!audioSource.isPlaying && thrustSound != null)
+            {
+                audioSource.clip = thrustSound;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            // Stop thrust sound when the key is released
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
         }
 
         // Limit maximum speed
