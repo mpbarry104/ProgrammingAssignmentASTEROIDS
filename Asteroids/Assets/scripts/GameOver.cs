@@ -4,47 +4,68 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour
 {
-    public AudioClip collisionSound; // Assign the collision sound
+    public AudioClip collisionSound;
     private AudioSource audioSource;
-    private bool isDestroyed = false; // Prevent multiple collisions from triggering
+    private bool isDestroyed = false;
+    public GameObject gameOverMenuUI;
+    private Timer timer;
 
     void Start()
     {
-        // Get or add an AudioSource component
         audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (gameOverMenuUI != null)
+        {
+            gameOverMenuUI.SetActive(false);
+        }
+        timer = Object.FindFirstObjectByType<Timer>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Asteroid") && !isDestroyed)
         {
-            isDestroyed = true; // Prevent multiple triggers
-            Debug.Log("Player hit! Playing sound and restarting...");
+            isDestroyed = true;
 
-            // Play collision sound
             if (collisionSound != null)
             {
                 audioSource.PlayOneShot(collisionSound);
             }
 
-            // Disable the player visually and functionally
             foreach (var renderer in GetComponentsInChildren<Renderer>())
             {
-                renderer.enabled = false; // Hide visuals
+                renderer.enabled = false;//hides player
             }
             foreach (var collider in GetComponents<Collider2D>())
             {
-                collider.enabled = false; // Disable collision
+                collider.enabled = false;//turn off player collision
             }
 
-            // Restart the game after the sound finishes
-            StartCoroutine(RestartGameAfterSound(collisionSound ? collisionSound.length : 0));
+            StartCoroutine(ShowGameOverMenu(collisionSound ? collisionSound.length : 0));
         }
     }
 
-    IEnumerator RestartGameAfterSound(float delay)
+    IEnumerator ShowGameOverMenu(float delay)
     {
-        yield return new WaitForSeconds(delay); // Wait for sound to finish
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Restart scene
+        yield return new WaitForSeconds(delay);//make sure the sound stops
+        if (gameOverMenuUI != null)
+        {
+            gameOverMenuUI.SetActive(true);//show the game over menu
+        }
+
+        if (timer != null)
+        {
+            timer.StopTimer();//stop timer
+        }
+    }
+    public void RestartGame()//function to restart game
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void ReturnToTitleScreen()//function to return to title screen
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Start");
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Destroy : MonoBehaviour
 {
+    //destroys bullet after 2sec (stops lag hopefully)
     void Start()
     {
         StartCoroutine(DestroyAfterDelay(2f));

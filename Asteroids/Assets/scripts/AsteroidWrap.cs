@@ -8,10 +8,7 @@ public class AsteroidWrap : MonoBehaviour
 
     void Start()
     {
-        // Cache the main camera
         mainCamera = Camera.main;
-
-        // Calculate the screen width and height in world units
         screenHeight = mainCamera.orthographicSize; // Half the height of the screen
         screenWidth = screenHeight * mainCamera.aspect; // Width depends on aspect ratio
     }
@@ -24,20 +21,19 @@ public class AsteroidWrap : MonoBehaviour
     private void WrapAroundScreen()
     {
         Vector3 position = transform.position;
-
-        // Check horizontal wrapping
+//horizontal
         if (position.x > screenWidth)
             position.x = -screenWidth;
         else if (position.x < -screenWidth)
             position.x = screenWidth;
 
-        // Check vertical wrapping
+//vertical
         if (position.y > screenHeight)
             position.y = -screenHeight;
         else if (position.y < -screenHeight)
             position.y = screenHeight;
 
-        // Apply the new position
+ //spawn at other side
         transform.position = position;
     }
 }

@@ -7,15 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public float MS = 10f; //max speed
 
     private Rigidbody2D rb;
-    public AudioClip thrustSound; // Assign your thrust sound clip here
+    public AudioClip thrustSound;
     private AudioSource audioSource;
 
     void Start()
     {
-        // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
-
-        // Get the AudioSource component
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -23,24 +20,21 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            audioSource.loop = true; // Make the sound loop
+            audioSource.loop = true;//makes sound loop
         }
     }
 
     [System.Obsolete]
     void Update()
     {
-        // Handle rotation
         float rotationInput = -Input.GetAxis("Horizontal"); // Use left/right arrows or A/D
         transform.Rotate(Vector3.forward * rotationInput * RS * Time.deltaTime);
 
-        // Handle thrust
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) // Use up arrow or W for thrust
         {
             Vector2 thrust = transform.up * TP;
             rb.AddForce(thrust);
 
-            // Play thrust sound if not already playing
             if (!audioSource.isPlaying && thrustSound != null)
             {
                 audioSource.clip = thrustSound;
@@ -49,24 +43,20 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Stop thrust sound when the key is released
             if (audioSource.isPlaying)
             {
                 audioSource.Stop();
             }
         }
 
-        // Limit maximum speed
-        if (rb.velocity.magnitude > MS)
+        if (rb.velocity.magnitude > MS)//limit max speed
         {
             rb.velocity = rb.velocity.normalized * MS;
         }
     }
-
     [System.Obsolete]
-    void FixedUpdate()
+    void FixedUpdate()//this simulates drag
     {
-        // Apply drag to simulate friction (optional, tweak if needed)
         rb.velocity *= 0.99f;
     }
 }

@@ -6,7 +6,6 @@ public class UIManager : MonoBehaviour
     // Play button is pushed
     public void Start()
     {
-        // SceneManager.LoadScene("Start");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

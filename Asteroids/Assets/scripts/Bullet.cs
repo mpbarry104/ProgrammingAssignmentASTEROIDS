@@ -4,14 +4,9 @@ public class Bullet : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the bullet collides with an object tagged as "Asteroid"
-        if (other.CompareTag("Asteroid"))
+        if (other.CompareTag("Asteroid"))//if bullet hits asteroid
         {
-
-            // Destroy the bullet upon collision
-            Destroy(gameObject);
-
-            // You can add additional logic to interact with the asteroid here (e.g., splitting it)
+            Destroy(gameObject);//bullet gone
             Asteroids asteroid = other.GetComponent<Asteroids>();
             if (asteroid != null)
             {

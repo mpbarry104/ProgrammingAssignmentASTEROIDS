@@ -2,43 +2,31 @@ using UnityEngine;
 
 public class Asteroids : MonoBehaviour
 {
-    public float speed = 5f;  // Speed of the asteroid's movement
-    public float rotationSpeed = 30f;  // Rotation speed of the asteroid
-    public GameObject[] smallerAsteroids;  // Prefabs for splitting into smaller asteroids
-    public float splitTime = 1f;  // Delay before the asteroid splits
-
-    private Rigidbody2D rb;
-
+    public float speed = 5f;  //asteroid speed
+    public float rotationSpeed = 30f;//rotation speed self explanatory
+    public GameObject[] smallerAsteroids;//array holds smaller asteroids
+    public float splitTime = 1f;//delay befor spli (dont think its used rn)
+    private Rigidbody2D rb;//rigidbody for physics
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Add random velocity to simulate random movement direction
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        rb.linearVelocity = randomDirection * speed;
-
-        // Add rotation to the asteroid for visual effect
-        transform.Rotate(0f, 0f, Random.Range(0f, 360f));
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;//choose a random direction in unitcircle to move
+        rb.linearVelocity = randomDirection * speed;//random direction times speed
+        transform.Rotate(0f, 0f, Random.Range(0f, 360f));//radomly rotate sprite (it looks nicer)
     }
-
     void Update()
     {
-        // Rotate asteroid constantly for effect
-        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);//keeps it spinning while flying
     }
-
-    public void Split()
+    public void Split()//called when it needs to split
     {
-        // Split the asteroid into smaller asteroids
         if (smallerAsteroids.Length > 0)
         {
-            foreach (var asteroidPrefab in smallerAsteroids)
+            foreach (var asteroidPrefab in smallerAsteroids)//recreates small asteroid at same position
             {
                 Instantiate(asteroidPrefab, transform.position, Quaternion.identity);
             }
         }
-
-        // Destroy the current asteroid
-        Destroy(gameObject);
+        Destroy(gameObject);//when smaller one is made big one is destroyed
     }
 }
